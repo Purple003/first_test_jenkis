@@ -7,20 +7,22 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'mvn clean install'
+                dir('.') {   // assure que Maven s'exécute dans le dossier racine
+                    bat 'mvn clean install'
+                }
             }
         }
 
         stage('Docker Build') {
             steps {
-                bat 'docker build -t aya/pos .'
+                bat 'docker build -t purple003/pos .'
             }
         }
 
         stage('Run Docker') {
             steps {
                 bat 'docker rm -f test-pos || echo "no container to remove"'
-                bat 'docker run --name test-pos -d -p 8585:8282 aya/pos'
+                bat 'docker run --name test-pos -d -p 8585:8282 purple003/pos'
             }
         }
     }
