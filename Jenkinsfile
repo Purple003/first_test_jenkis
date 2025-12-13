@@ -5,9 +5,15 @@ pipeline {
     }
 
     stages {
+        stage('Git Clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Purple003/first_test_jenkis.git'
+            }
+        }
+
         stage('Build') {
             steps {
-                dir('.') {   // assure que Maven s'exécute dans le dossier racine
+                dir('.') {   // assure que Maven s'exécute dans le dossier où se trouve pom.xml
                     bat 'mvn clean install'
                 }
             }
